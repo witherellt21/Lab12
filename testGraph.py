@@ -1,7 +1,7 @@
 """
 File: testGraph.py
 
-YOUR NAME GOES HERE
+Taylor Witherell
 """
 
 from modules.graph.graph import LinkedDirectedGraph
@@ -16,60 +16,37 @@ from modules.math.infinity import *
 
 def traverseFromVertex(graph, startVertex, showProcess, collection = LinkedStack()):
     # Exercise
-    lyst = LinkedStack()
     graph.clearVertexMarks()
-    lyst.add(startVertex)
-    while len(lyst) != 0:
-        vertex = lyst.pop()
+    collection.add(startVertex)
+    while len(collection) != 0:
+        vertex = collection.pop()
         if not vertex.isMarked():
             if showProcess:
                 print(vertex)
             vertex.setMark()
             for edge in vertex.incidentEdges():
                 if vertex == edge.getConnectedFrom():
-                    lyst.add(edge.getConnectedTo())
-                
-            
-            
+                    collection.add(edge.getConnectedTo())
 
-                
+
+
+
+
 
 def depthFirstTraverse(graph, startVertex, showProcess):
     # Exercise
-    lyst = LinkedStack()
-    graph.clearVertexMarks()
-    lyst.add(startVertex)
-    while len(lyst) != 0:
-        vertex = lyst.pop()
-        if not vertex.isMarked():
-            if showProcess:
-                print(vertex)
-            vertex.setMark()
-            for edge in vertex.incidentEdges():
-                if vertex == edge.getConnectedFrom():
-                    lyst.add(edge.getConnectedTo())
+    traverseFromVertex(graph, startVertex, showProcess, LinkedStack())
 
 def breadthFirstTraverse(graph, startVertex, showProcess):
     # Exercise
-    lyst = LinkedQueue()
-    graph.clearVertexMarks()
-    lyst.add(startVertex)
-    while len(lyst) != 0:
-        vertex = lyst.pop()
-        if not vertex.isMarked():
-            if showProcess:
-                print(vertex)
-            vertex.setMark()
-            for edge in vertex.incidentEdges():
-                if vertex == edge.getConnectedFrom():
-                    lyst.add(edge.getConnectedTo())
+    traverseFromVertex(graph, startVertex, showProcess, LinkedQueue())
 
-          
+
 def main():
-        
+
     # Create a directed graph using an adjacency list
     graph = LinkedDirectedGraph()
-    
+
     # Exercise: Add vertices with appropriate labels and print the graph
     graph.addVertex('A')
     graph.addVertex('B')
@@ -82,7 +59,7 @@ def main():
     graph.addVertex('I')
     graph.addVertex('J')
     print("\nThe graph: \n" + str(graph))
-    
+
     # Exercise: Insert edges with weights and print the graph
     graph.addEdge("A", "J", 1)
     graph.addEdge("A", "I", 8)
@@ -97,29 +74,29 @@ def main():
     graph.addEdge("H", "E", 1)
     graph.addEdge("J", "B", 1)
     graph.addEdge("J", "H", 6)
-    
+
     print("\nThe graph: \n" + str(graph))
-    
+
     # Print the vertices adjacent to vertex A
     print("\nExpect vertices adjacent to A:")
     print(", ".join(list(map(str,graph.getVertex("A").neighboringVertices()))))
-    
+
     # Print the edges incident to A
     print("Expect edges incident to A:")
     print(", ".join(list(map(str,graph.getVertex("A").incidentEdges()))))
-    
+
     # Exercise
     print("\nTraverse from vertex A:")
     traverseFromVertex(graph, graph.getVertex("A"), True)
-    
+
     # Exercise
     print("\nDepth first traversal:")
     depthFirstTraverse(graph, graph.getVertex("A"), True)
-    
+
     # Exercise
     print("\nBreadth first traversal:")
     breadthFirstTraverse(graph, graph.getVertex("A"), True)
-    
+
 
 if __name__ == '__main__':
     main()
